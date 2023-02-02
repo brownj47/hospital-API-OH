@@ -1,26 +1,16 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../config/connection");
+const {Model, DataTypes} = require("sequelize");
+const sequelize = require("../config/connection")
 
-class Record extends Model {}
+class Record extends Model{}
 
-Record.init(
-    {
-        visitNotes: {
-            type:DataTypes.TEXT
-        },
-        patientID: {
-            type:DataTypes.INTEGER,
-            references:{
-                model:"patients",
-                key:"id"
-            }
-        },
-
-    },
-    {
-        sequelize,
-        modelName: "record",
+Record.init({
+    visitNotes:{
+        type: DataTypes.TEXT,
+        allowNull: false
     }
-);
+}, {
+    sequelize
+}
+)
 
 module.exports = Record;

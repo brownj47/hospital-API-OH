@@ -1,18 +1,27 @@
-const express = require("express");
-const sqlConnection = require("./config/connection");
-const allRoutes = require("./routes");
+require("dotenv").config();
+const express = require('express');
 
+const sequelize = require('./config/connection');
+
+const {Physician, Patient, Record } = require('./models')
+
+// Sets up the Express App
+// =============================================================
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-const app = express();
-
+// Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use("/", allRoutes);
 
-sqlConnection.sync({ force: false }).then(() => {
-    app.listen(PORT, () => {
-        console.log(`listening at http://localhost:${PORT}`);
+const allRoutes = require("./controllers");
+
+app.use(allRoutes);
+
+
+sequelize.sync({force:true}).then(function() {
+    app.listen(PORT, function() {
+        console.log('App listening on PORT ' + PORT);
     });
 });

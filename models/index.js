@@ -1,9 +1,5 @@
-const Patient = require("./Patient")
-const Record = require("./Record")
+const Physician = require("./Physician");
+const Patient = require("./Patient");
+const Record = require("./Record");
 
-Patient.hasMany(Record, {
-    foreignKey: "patientID",
-    onDelete:"CASCADE"
-})
-
-module.exports = {Patient, Record}
+module.exports = { Physician, Patient, Record };
