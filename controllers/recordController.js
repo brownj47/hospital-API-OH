@@ -1,8 +1,10 @@
 const router = require("express").Router();
-const { Record } = require("../models");
+const { Record, Patient, Physician } = require("../models");
 
 router.get("/", (req,res)=>{
-    Record.findAll() .then((data) => {
+    Record.findAll({
+        include:[Patient,Physician]
+    }) .then((data) => {
         res.status(200).json(data);
     })
     .catch((err) => console.log(err));
