@@ -1,9 +1,24 @@
 const router = require("express").Router();
-const { Physician, Patient } = require("../models");
+const { Physician, Patient, Record } = require("../models");
 
 router.get("/", (req,res)=>{
     Physician.findAll({
-        include:[Patient]
+        include:[{
+            model:Patient,
+        }]
+    }) .then((data) => {
+        res.status(200).json(data);
+    })
+    .catch((err) => console.log(err));
+})
+router.get("/:id", (req,res)=>{
+    Physician.findByPk(req.params.id,{
+        include:[{
+            model:Patient,
+            include:{
+                model:Record
+            }
+        }]
     }) .then((data) => {
         res.status(200).json(data);
     })
